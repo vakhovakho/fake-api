@@ -1,5 +1,6 @@
 const express = require('express');
 const db = require('./connection');
+const cors = require('cors');
 const app = express();
 const port = 5000;
 
@@ -7,6 +8,7 @@ db.connect('app.db');
 db.createNotesTable();
 
 app.use(express.json());
+app.use(cors())
 
 app.get('/notes', (req, res) => {
 	db.getNotes()
