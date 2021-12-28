@@ -40,11 +40,18 @@ module.exports = {
     },
 
     insertNote(title, text) {
-        this.db.exec(`
-            INSERT INTO notes
-            (title, text)
-            values('${title}','${text}')
-       `)
+        return new Promise((resolve) => {
+            this.db.exec(`
+                INSERT INTO notes
+                (title, text)
+                values('${title}','${text}')
+            `);
+
+            this.db.get(` SELECT * FROM notes ORDER BY id DESC LIMIT 1`, [], (err, row) => {
+                resolve(row.id);
+            });
+        })
+        
     },
 
     updateNote(id, title, text) {

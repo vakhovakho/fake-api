@@ -16,8 +16,8 @@ app.get('/notes', (req, res) => {
 });
 
 app.post('/notes', (req, res) => {
-	db.insertNote(req.body.title, req.body.description);
-	res.send('inserted');
+	db.insertNote(req.body.title, req.body.description)
+		.then(id => res.send(id.toString()));
 });
 
 app.put('/notes/:id', (req, res) => {
